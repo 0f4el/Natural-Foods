@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Natural Foods - Marmitas Fitness</title>
+    <!-- Tailwind CSS para um design moderno, rápido e responsivo -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Ícones do FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Esconder scrollbar no mobile para as categorias */
+        .scrollbar-none::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-none {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans pb-24">
+
+    <!-- HEADER / TOPO -->
+    <header class="bg-green-700 text-white shadow-md sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col items-center justify-between sm:flex-row">
+            <div class="text-center sm:text-left mb-3 sm:mb-0">
+                <h1 class="text-2xl font-bold tracking-wide flex items-center justify-center sm:justify-start gap-2">
+                    <i class="fa-solid fa-leaf text-emerald-300"></i> NATURAL FOODS
+                </h1>
+                <p class="text-xs text-emerald-100 mt-1">Alimentação Saudável e Prática</p>
+            </div>
+            <div class="flex items-center gap-4 bg-emerald-800 px-4 py-2 rounded-full text-sm">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-motorcycle text-emerald-300"></i> Entrega BH e Contagem</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- BANNER LARANJA (Inspirado na imagem original) -->
+    <div class="bg-gradient-to-r from-orange-600 to-orange-500 py-12 px-4 shadow-inner">
+        <div class="max-w-6xl mx-auto text-center text-white">
+            <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Os Favoritos de BH e Contagem!</h2>
+            <p class="mt-4 text-orange-50 max-w-2xl mx-auto">Marmitas fitness deliciosas, preparadas com ingredientes selecionados para sua semana ser prática e saudável. Peça já!</p>
+            <div class="mt-8 flex gap-3 justify-center">
+                <button class="bg-white text-orange-600 font-bold px-6 py-3 rounded-full shadow hover:bg-orange-50 transition cursor-pointer">Ver Cardápio</button>
+                <button class="bg-emerald-600 text-white font-bold px-6 py-3 rounded-full shadow hover:bg-emerald-700 transition cursor-pointer">Kits Promocionais</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- CATEGORIAS -->
+    <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-[69px] md:top-[73px] z-40 overflow-x-auto whitespace-nowrap scrollbar-none">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-start md:justify-center gap-4 md:gap-8">
+            <button class="bg-orange-100 text-orange-700 font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+                <i class="fa-solid fa-star"></i> Promocionais
+            </button>
+            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+                <i class="fa-solid fa-drumstick-bite"></i> Frango + Carne
+            </button>
+            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+                <i class="fa-solid fa-seedling"></i> Low Carb
+            </button>
+            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+                <i class="fa-solid fa-utensils"></i> Comida Mineira
+            </button>
+        </div>
+    </nav>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="max-w-6xl mx-auto px-4 mt-8">
+        
+        <!-- Seção: Super Promoções -->
+        <section class="mb-12">
+            <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
+                <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-6 bg-orange-500 rounded"></span> 🔥 Combos Promocionais
+                </h2>
+            </div>
+
+            <!-- Grid de Produtos -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                
+                <!-- CARD PRODUTO 1 (Com desconto e cores laranja em destaque) -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 bg-gray-200 overflow-hidden">
+                            <!-- Tag de Desconto Laranja -->
+                            <span class="absolute top-3 left-3 bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-20%</span>
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" alt="Combo Low Carb" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 20 Unidades</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">Combo Low Carb (10 Carne + 10 Frango)</h3>
+                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
+                                100g de proteína + 150g de legumes selecionados. Livre de BPA. Sabor e saúde garantidos.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-sm text-gray-400 line-through">R$ 400,00</span>
+                            <!-- Preço Laranja para Destaque -->
+                            <span class="text-2xl font-black text-orange-600">R$ 320,00</span>
+                        </div>
+                        <!-- Botão Laranja (Call to Action Forte) -->
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD PRODUTO 2 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 bg-gray-200 overflow-hidden">
+                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=80" alt="Marmita Mineira" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 10 Unidades</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">10 Marmitas Comida Mineira (Arroz Branco)</h3>
+                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
+                                O sabor tradicional de Minas. 5 unidades de carne moída com quiabo e 5 de frango com milho.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-2xl font-black text-orange-600">R$ 220,00</span>
+                        </div>
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+                <!-- CARD PRODUTO 3 -->
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <div class="relative h-48 bg-gray-200 overflow-hidden">
+                            <span class="absolute top-3 left-3 bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-7%</span>
+                            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" alt="Marmitas Arroz Integral" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 20 Unidades</span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">20 Marmitas Arroz Integral (10 Carne + 10 Frango)</h3>
+                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
+                                Arroz integral, patinho moído e cubos de peito de frango. Legumes no vapor inclusos.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
+                        <div class="flex items-baseline gap-2 mb-4">
+                            <span class="text-sm text-gray-400 line-through">R$ 280,00</span>
+                            <span class="text-2xl font-black text-orange-600">R$ 260,00</span>
+                        </div>
+                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
+    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.1)] z-50">
+        <div class="max-w-md mx-auto flex justify-around py-3 text-center">
+            <a href="#" class="text-emerald-700 flex flex-col items-center gap-1 text-xs font-semibold">
+                <i class="fa-solid fa-utensils text-xl"></i>
+                Cardápio
+            </a>
+            <a href="#" class="text-gray-400 hover:text-orange-500 flex flex-col items-center gap-1 text-xs font-medium transition relative">
+                <i class="fa-solid fa-basket-shopping text-xl"></i>
+                Carrinho
+                <span class="absolute -top-1.5 right-1.5 bg-orange-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">3</span>
+            </a>
+            <a href="#" class="text-gray-400 hover:text-emerald-700 flex flex-col items-center gap-1 text-xs font-medium transition">
+                <i class="fa-solid fa-clock-rotate-left text-xl"></i>
+                Histórico
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

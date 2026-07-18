@@ -1,0 +1,35 @@
+# Ambiente Virtual
+venv/
+.venv/
+env/
+ENV/
+
+# Python (Arquivos compilados e cache)
+**/__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+
+# Banco de Dados Local (para não enviar seus testes locais para o Git)
+*.db
+*.sqlite3
+
+# Uploads de Mídia (evita enviar as fotos de teste que você subir no painel)
+static/uploads/*
+# Mas permite que a pasta 'uploads' exista no repositório vazia (opcional)
+!static/uploads/.gitkeep
+
+# Configurações do VS Code ou outros editores
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.swp
+
+# Arquivos de variáveis de ambiente (onde ficam senhas e chaves secretas)
+.env
+.flaskenv
