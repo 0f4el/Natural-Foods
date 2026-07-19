@@ -14,36 +14,89 @@
             display: none;
         }
         .scrollbar-none {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        /* Ajuste para a logo */
+        .logo-img {
+            height: 40px;
+            width: auto;
+            display: block;
+            border-radius: 50%;
+        }
+        @media (max-width: 640px) {
+            .logo-img {
+                height: 32px;
+            }
+        }
+
+        /* Cores personalizadas */
+        .bg-verde {
+            background-color: #13803C;
+        }
+        .bg-laranja {
+            background-color: #F14900;
+        }
+        .text-verde {
+            color: #13803C;
+        }
+        .text-laranja {
+            color: #F14900;
+        }
+        .border-laranja {
+            border-color: #F14900;
+        }
+        .hover-bg-verde:hover {
+            background-color: #13803C;
+        }
+        .hover-bg-laranja:hover {
+            background-color: #d93e00;
+        }
+        .hover-text-verde:hover {
+            color: #13803C;
+        }
+        .hover-text-laranja:hover {
+            color: #F14900;
+        }
+        .btn-laranja {
+            background-color: #F14900;
+            color: white;
+        }
+        .btn-laranja:hover {
+            background-color: #d93e00;
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans pb-24">
+<body class="bg-gray-50 text-gray-800 font-sans">
 
     <!-- HEADER / TOPO -->
-    <header class="bg-green-700 text-white shadow-md sticky top-0 z-50">
+    <header class="bg-laranja text-white shadow-md sticky top-0 z-50">
         <div class="max-w-6xl mx-auto px-4 py-3 flex flex-col items-center justify-between sm:flex-row">
-            <div class="text-center sm:text-left mb-3 sm:mb-0">
-                <h1 class="text-2xl font-bold tracking-wide flex items-center justify-center sm:justify-start gap-2">
-                    <i class="fa-solid fa-leaf text-emerald-300"></i> NATURAL FOODS
-                </h1>
-                <p class="text-xs text-emerald-100 mt-1">Alimentação Saudável e Prática</p>
-            </div>
-            <div class="flex items-center gap-4 bg-emerald-800 px-4 py-2 rounded-full text-sm">
-                <span class="flex items-center gap-1"><i class="fa-solid fa-motorcycle text-emerald-300"></i> Entrega BH e Contagem</span>
+            <div class="text-center sm:text-left mb-3 sm:mb-0 flex items-center gap-3">
+                <!-- Logo substituindo o ícone de folha -->
+                <img src="static/img/NATURAL_FOODS-logo.jpg" alt="Natural Foods Logo" class="logo-img">
+                <div>
+                    <h1 class="text-2xl font-bold tracking-wide">NATURAL FOODS</h1>
+                    <p class="text-xs text-emerald-100 mt-1">Alimentação Saudável e Prática</p>
+                </div>
             </div>
         </div>
     </header>
-
-    <!-- BANNER LARANJA (Inspirado na imagem original) -->
-    <div class="bg-gradient-to-r from-orange-600 to-orange-500 py-12 px-4 shadow-inner">
-        <div class="max-w-6xl mx-auto text-center text-white">
+    
+    <!-- BANNER COM IMAGEM -->
+    <div class="relative bg-verde py-12 px-4 shadow-inner overflow-hidden">
+        <!-- Imagem de fundo -->
+        <img src="static/img/banner.jpg" alt="Marmitas Fitness" class="absolute inset-0 w-full h-full object-cover object-top opacity-25">
+        <!-- Overlay escuro para garantir legibilidade -->
+        <div class="absolute inset-0 bg-black opacity-30"></div>
+        
+        <!-- Conteúdo do banner -->
+        <div class="relative z-10 max-w-6xl mx-auto text-center text-white">
             <h2 class="text-3xl md:text-4xl font-extrabold tracking-tight">Os Favoritos de BH e Contagem!</h2>
             <p class="mt-4 text-orange-50 max-w-2xl mx-auto">Marmitas fitness deliciosas, preparadas com ingredientes selecionados para sua semana ser prática e saudável. Peça já!</p>
-            <div class="mt-8 flex gap-3 justify-center">
-                <button class="bg-white text-orange-600 font-bold px-6 py-3 rounded-full shadow hover:bg-orange-50 transition cursor-pointer">Ver Cardápio</button>
-                <button class="bg-emerald-600 text-white font-bold px-6 py-3 rounded-full shadow hover:bg-emerald-700 transition cursor-pointer">Kits Promocionais</button>
+            <div class="mt-8 flex gap-3 justify-center flex-wrap">
+                <button class="bg-white text-laranja font-bold px-6 py-3 rounded-full shadow hover:bg-orange-50 transition cursor-pointer">Ver Cardápio</button>
+                <button class="bg-verde text-white font-bold px-6 py-3 rounded-full shadow hover:bg-verde-claro transition cursor-pointer">Kits Promocionais</button>
             </div>
         </div>
     </div>
@@ -51,16 +104,16 @@
     <!-- CATEGORIAS -->
     <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-[69px] md:top-[73px] z-40 overflow-x-auto whitespace-nowrap scrollbar-none">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-start md:justify-center gap-4 md:gap-8">
-            <button class="bg-orange-100 text-orange-700 font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+            <button class="bg-laranja text-white font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition hover:bg-orange-700">
                 <i class="fa-solid fa-star"></i> Promocionais
             </button>
-            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
                 <i class="fa-solid fa-drumstick-bite"></i> Frango + Carne
             </button>
-            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
                 <i class="fa-solid fa-seedling"></i> Low Carb
             </button>
-            <button class="text-gray-600 hover:bg-gray-100 hover:text-emerald-700 font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
+            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
                 <i class="fa-solid fa-utensils"></i> Comida Mineira
             </button>
         </div>
@@ -73,23 +126,22 @@
         <section class="mb-12">
             <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
                 <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
-                    <span class="w-2 h-6 bg-orange-500 rounded"></span> 🔥 Combos Promocionais
+                    <span class="w-2 h-6 rounded bg-laranja"></span> 🔥 Combos Promocionais
                 </h2>
             </div>
 
             <!-- Grid de Produtos -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 
-                <!-- CARD PRODUTO 1 (Com desconto e cores laranja em destaque) -->
+                <!-- CARD PRODUTO 1 -->
                 <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
                     <div>
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            <!-- Tag de Desconto Laranja -->
-                            <span class="absolute top-3 left-3 bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-20%</span>
+                            <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-20%</span>
                             <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" alt="Combo Low Carb" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="p-5">
-                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 20 Unidades</span>
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 20 Unidades</span>
                             <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">Combo Low Carb (10 Carne + 10 Frango)</h3>
                             <p class="text-xs text-gray-500 mt-2 line-clamp-3">
                                 100g de proteína + 150g de legumes selecionados. Livre de BPA. Sabor e saúde garantidos.
@@ -99,11 +151,9 @@
                     <div class="p-5 pt-0 border-t border-gray-50 mt-4">
                         <div class="flex items-baseline gap-2 mb-4">
                             <span class="text-sm text-gray-400 line-through">R$ 400,00</span>
-                            <!-- Preço Laranja para Destaque -->
-                            <span class="text-2xl font-black text-orange-600">R$ 320,00</span>
+                            <span class="text-2xl font-black text-laranja">R$ 320,00</span>
                         </div>
-                        <!-- Botão Laranja (Call to Action Forte) -->
-                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
@@ -116,7 +166,7 @@
                             <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=80" alt="Marmita Mineira" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="p-5">
-                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 10 Unidades</span>
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 10 Unidades</span>
                             <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">10 Marmitas Comida Mineira (Arroz Branco)</h3>
                             <p class="text-xs text-gray-500 mt-2 line-clamp-3">
                                 O sabor tradicional de Minas. 5 unidades de carne moída com quiabo e 5 de frango com milho.
@@ -125,9 +175,9 @@
                     </div>
                     <div class="p-5 pt-0 border-t border-gray-50 mt-4">
                         <div class="flex items-baseline gap-2 mb-4">
-                            <span class="text-2xl font-black text-orange-600">R$ 220,00</span>
+                            <span class="text-2xl font-black text-laranja">R$ 220,00</span>
                         </div>
-                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
@@ -137,11 +187,11 @@
                 <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
                     <div>
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            <span class="absolute top-3 left-3 bg-orange-500 text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-7%</span>
+                            <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-7%</span>
                             <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" alt="Marmitas Arroz Integral" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                         </div>
                         <div class="p-5">
-                            <span class="text-xs font-bold text-orange-600 uppercase tracking-wider">Kit 20 Unidades</span>
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 20 Unidades</span>
                             <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">20 Marmitas Arroz Integral (10 Carne + 10 Frango)</h3>
                             <p class="text-xs text-gray-500 mt-2 line-clamp-3">
                                 Arroz integral, patinho moído e cubos de peito de frango. Legumes no vapor inclusos.
@@ -151,9 +201,9 @@
                     <div class="p-5 pt-0 border-t border-gray-50 mt-4">
                         <div class="flex items-baseline gap-2 mb-4">
                             <span class="text-sm text-gray-400 line-through">R$ 280,00</span>
-                            <span class="text-2xl font-black text-orange-600">R$ 260,00</span>
+                            <span class="text-2xl font-black text-laranja">R$ 260,00</span>
                         </div>
-                        <button class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
@@ -167,21 +217,133 @@
     <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
     <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.1)] z-50">
         <div class="max-w-md mx-auto flex justify-around py-3 text-center">
-            <a href="#" class="text-emerald-700 flex flex-col items-center gap-1 text-xs font-semibold">
+            <a href="#" class="text-verde flex flex-col items-center gap-1 text-xs font-semibold">
                 <i class="fa-solid fa-utensils text-xl"></i>
                 Cardápio
             </a>
-            <a href="#" class="text-gray-400 hover:text-orange-500 flex flex-col items-center gap-1 text-xs font-medium transition relative">
+            <a href="#" class="text-gray-400 hover-text-laranja flex flex-col items-center gap-1 text-xs font-medium transition relative">
                 <i class="fa-solid fa-basket-shopping text-xl"></i>
                 Carrinho
-                <span class="absolute -top-1.5 right-1.5 bg-orange-500 text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">3</span>
+                <span class="absolute -top-1.5 right-1.5 bg-laranja text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">3</span>
             </a>
-            <a href="#" class="text-gray-400 hover:text-emerald-700 flex flex-col items-center gap-1 text-xs font-medium transition">
+            <a href="#" class="text-gray-400 hover-text-verde flex flex-col items-center gap-1 text-xs font-medium transition">
                 <i class="fa-solid fa-clock-rotate-left text-xl"></i>
                 Histórico
             </a>
         </div>
     </div>
+        
+    <!-- RODAPÉ -->
+    <footer class="text-white mt-16" style="background-color: #181717;">
+        <div class="max-w-6xl mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <!-- Coluna 1 - Sobre -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-solid fa-leaf text-verde"></i> Sobre
+                    </h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        A Natural Foods é especialista em marmitas fitness e alimentação saudável. 
+                        Preparadas com ingredientes selecionados, nossas refeições são ideais para 
+                        quem busca praticidade sem abrir mão do sabor e da qualidade nutricional.
+                    </p>
+                    <div class="mt-4 flex gap-3">
+                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                            <i class="fa-brands fa-whatsapp"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                            <i class="fa-brands fa-facebook"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Coluna 2 - Horários -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-regular fa-clock text-verde"></i> Horários (exemplo para alterar dps)
+                    </h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li class="flex justify-between">
+                            <span>Segunda a Sexta</span>
+                            <span class="text-white">09:00 - 21:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Sábado</span>
+                            <span class="text-white">10:00 - 18:00</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>Domingo</span>
+                            <span class="text-white">10:00 - 14:00</span>
+                        </li>
+                        <li class="flex justify-between text-verde font-medium mt-2">
+                            <span>Entregas</span>
+                            <span>Segunda a Sábado</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Coluna 3 - Contato e Endereço -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
+                        <i class="fa-regular fa-address-card text-verde"></i> Contato
+                    </h3>
+                    
+                    <!-- Telefone -->
+                    <div class="flex items-start gap-3 mb-3">
+                        <i class="fa-solid fa-phone text-verde text-lg mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-white">Telefone</p>
+                            <a href="tel:+553195947489" class="text-gray-400 hover-text-verde transition text-sm">
+                                (31) xxxxx-xxxx
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- WhatsApp -->
+                    <div class="flex items-start gap-3 mb-4">
+                        <i class="fa-brands fa-whatsapp text-verde text-lg mt-0.5"></i>
+                        <div>
+                            <p class="text-sm font-medium text-white">WhatsApp</p>
+                            <a href="https://wa.me/553195947489" target="_blank" class="text-gray-400 hover-text-verde transition text-sm">
+                                (31) 95947-489
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Endereço -->
+                    <div class="border-t border-gray-800 pt-4 mt-2">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-location-dot text-verde text-lg mt-0.5"></i>
+                            <div>
+                                <p class="text-sm font-medium text-white">Endereço</p>
+                                <p class="text-gray-400 text-sm leading-relaxed">
+                                    Rua Violinos, Nº 55<br>
+                                    California, Belo Horizonte - MG
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Linha divisória e copyright -->
+            <div class="border-t border-gray-800 mt-10 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-gray-500">
+                <p>
+                    &copy; 2026 <span class="text-verde font-medium">Natural Foods</span> - Todos os direitos reservados
+                </p>
+                <p class="mt-2 md:mt-0 flex items-center gap-4">
+                    <a href="#" class="hover-text-verde transition">Política de Privacidade</a>
+                    <span>|</span>
+                    <a href="#" class="hover-text-verde transition">Termos de Uso</a>
+                </p>
+            </div>
+        </div>
+    </footer>
 
 </body>
 </html>
