@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 85e3744 ((feat-BE): Criação do Models Categorias e Inicialização do DB)
 altgraph==0.17.5
 asgiref==3.11.1
 attrs==26.1.0
@@ -41,3 +45,19 @@ tzdata==2026.2
 ujson==5.13.0
 urllib3==2.7.0
 zope.interface==8.5
+<<<<<<< HEAD
+=======
+=======
+Flask>=3.0.0
+Flask-SQLAlchemy>=3.1.0
+Flask-Migrate>=4.0.0
+SQLAlchemy>=2.0.0
+Flask-Admin>=1.6.0
+Flask-WTF>=1.2.0
+WTForms>=3.1.0
+Flask-Mail>=0.9.0
+Pillow
+requests
+python-dotenv
+>>>>>>> 0a9b4c3 ((feat-BE): Criação de Models categorias e inicialização do DB)
+>>>>>>> 85e3744 ((feat-BE): Criação do Models Categorias e Inicialização do DB)
