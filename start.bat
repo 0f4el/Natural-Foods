@@ -16,20 +16,24 @@ if errorlevel 1 (
     exit /b 1
 )
 
+REM Cria o ambiente virtual se não existir
+if not exist "venv\" (
+    echo AVISO: Venv não encontrado!
+    echo Criando ambiente virtual - venv...
+    python -m venv venv
+    echo Venv criado com sucesso!
+    echo.
+)
+
 REM Ativa ambiente virtual se existir
 if exist venv\Scripts\activate (
     echo Ativando ambiente virtual...
     call venv\Scripts\activate
 )
 
-REM Verifica se o Flask está instalado
-python -c "import flask" >nul 2>&1
-if errorlevel 1 (
-    echo AVISO: Flask nao encontrado!
-    echo Instalando Flask...
-    pip install flask
-    echo.
-)
+REM 3. Garantir a instalacao de TODAS as dependencias do requirements.txt
+echo Verificando e instalando dependencias do requirements.txt...
+pip install -r requirements.txt
 
 REM Define o arquivo principal
 set FLASK_APP=app.py
