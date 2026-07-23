@@ -1,53 +1,3 @@
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 85e3744 ((feat-BE): Criação do Models Categorias e Inicialização do DB)
-altgraph==0.17.5
-asgiref==3.11.1
-attrs==26.1.0
-autobahn==26.6.2
-Automat==25.4.16
-cbor2==6.1.2
-certifi==2026.6.17
-cffi==2.0.0
-channels==4.3.2
-charset-normalizer==3.4.7
-constantly==23.10.4
-cryptography==49.0.0
-daphne==4.2.2
-Django==6.0.5
-djangorestframework==3.17.1
-djangorestframework_simplejwt==5.5.1
-hyperlink==21.0.0
-idna==3.18
-Incremental==24.11.0
-msgpack==1.2.1
-mysqlclient==2.2.8
-packaging==26.2
-pefile==2024.8.26
-psutil==5.9.8
-pycparser==3.0
-pyinstaller==6.21.0
-pyinstaller-hooks-contrib==2026.6
-PyJWT==2.13.0
-pyOpenSSL==26.3.0
-python-decouple==3.8
-pywin32==312
-pywin32-ctypes==0.2.3
-requests==2.32.3
-service-identity==26.1.0
-setuptools==82.0.1
-sqlparse==0.5.5
-Twisted==26.4.0
-txaio==26.6.1
-typing_extensions==4.16.0
-tzdata==2026.2
-ujson==5.13.0
-urllib3==2.7.0
-zope.interface==8.5
-<<<<<<< HEAD
-=======
-=======
 Flask>=3.0.0
 Flask-SQLAlchemy>=3.1.0
 Flask-Migrate>=4.0.0
@@ -59,5 +9,3 @@ Flask-Mail>=0.9.0
 Pillow
 requests
 python-dotenv
->>>>>>> 0a9b4c3 ((feat-BE): Criação de Models categorias e inicialização do DB)
->>>>>>> 85e3744 ((feat-BE): Criação do Models Categorias e Inicialização do DB)
