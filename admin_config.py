@@ -1,17 +1,19 @@
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
 from extensions import db
-from models import Categoria
+from models import Categoria, Produto
 from wtforms.validators import Optional
 
-# Personalização da visão da Categoria no Painel
+# ==========================================
+# ADMIN VIEW: Categoria
+# ==========================================
 class CategoriaAdminView(ModelView):
     # Colunas visíveis na tabela de listagem do painel
     column_list = ('id', 'nome', 'slug', 'icone')
-    
+
     # Campos que você pode buscar pelo campo de pesquisa no painel
     column_searchable_list = ['nome', 'slug']
-    
+
     # Filtros rápidos na barra lateral do painel
     column_filters = ['nome']
 
@@ -29,8 +31,45 @@ class CategoriaAdminView(ModelView):
         }
     }
 
+# ==========================================
+# ADMIN VIEW: Produto (Task 03.2)
+# ==========================================
+class ProdutoAdminView(ModelView):
+    # Colunas visíveis na tabela de listagem do painel
+    column_list = ('id', 'nome', 'preco', 'destaque', 'categoria', 'slug')
+    
+    # Campos disponíveis para busca
+    column_searchable_list = ['nome', 'descricao', 'slug']
+    
+    # Filtros na barra lateral (permite filtrar por categoria e destaque)
+    column_filters = ['categoria.nome', 'destaque', 'preco']
+    
+    # Torna o campo 'slug' opcional no formulário
+    form_args = {
+        'slug': {
+            'validators': [Optional()]
+        }
+    }
+
+    form_optional_types = (db.String,)
+
+    # Customiza visualmente os campos do formulário de criação/edição
+    form_widget_args = {
+        'slug': {
+            'placeholder': 'Deixe em branco para gerar automaticamente'
+        },
+        'descricao': {
+            'rows': 4
+        }
+    }
+
+
+# ==========================================
+# INICIALIZAÇÃO DO ADMIN
+# ==========================================
 def init_admin(app):
     admin = Admin(app, name='Natural Foods Admin')   
 
-    # Registra o Model Categoria no Flask-Admin usando a visão customizada
+    # Registra as visões no painel
     admin.add_view(CategoriaAdminView(Categoria, db.session, name='Categorias'))
+    admin.add_view(ProdutoAdminView(Produto, db.session, name='Produtos'))
