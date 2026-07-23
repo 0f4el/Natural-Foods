@@ -16,6 +16,9 @@ def slugify(text):
     text = re.sub(r'[\s-]+', '-', text)
     return text
 
+# ==========================================
+# MODEL: Categoria
+# ==========================================
 class Categoria(db.Model):
     __tablename__ = 'categorias'
 
@@ -24,8 +27,7 @@ class Categoria(db.Model):
     slug = db.Column(db.String(100), unique=True, nullable=True)
     icone = db.Column(db.String(50), nullable=True) # Ex: 'fa-seedling', 'fa-star'
 
-    # Relacionamento: permite acessar os produtos de uma categoria diretamente (para a Task 03.1)
-    # produtos = db.relationship('Produto', backref='categoria', lazy=True)
+    produtos = db.relationship('Produto', backref='categoria', lazy=True)
 
     def __repr__(self):
         return f'<Categoria {self.nome}>'
@@ -35,3 +37,27 @@ class Categoria(db.Model):
 def receive_before_insert(mapper, connection, target):
     if target.nome and not target.slug:
         target.slug = slugify(target.nome)  
+
+# ==========================================
+# MODEL: Produto
+# ==========================================
+class Produto(db.Model):
+    __tablename__ = 'produtos'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    nome = db.Column(db.String(150), nullable=False)
+    slug = db.Column(db.String(150), unique=True, nullable=False)
+    descricao = db.Column(db.Text, nullable=True)
+    preco = db.Column(db.Float, nullable=False)
+    imagem = db.Column(db.String(255), nullable=True)  # Nome/Caminho da imagem
+    destaque = db.Column(db.Boolean, default=False)     # Para exibir na Home se for True
+
+    # Chave Estrangeira apontando para a tabela 'categorias'
+    categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
+
+# Auto-gera o slug do Produto antes de salvar
+@event.listens_for(Produto, 'before_insert')
+@event.listens_for(Produto, 'before_update')
+def receive_before_insert_produto(mapper, connection, target):
+    if target.nome and not target.slug:
+        target.slug = slugify(target.nome)
