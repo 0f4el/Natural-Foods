@@ -1,6 +1,7 @@
 from flask import Flask, render_template
 from extensions import db, migrate
 from admin_config import init_admin
+from models import Produto
 
 app = Flask(__name__)
 
@@ -24,9 +25,13 @@ init_admin(app)
 
 # === ROTAS ===
 
-@app.route("/")
-def hello_world():
-    return render_template("teste.html")
+@app.route('/')
+def index():
+    # Realiza a consulta no banco buscando apenas produtos ativos
+    produtos = Produto.query.filter_by(ativo=True).all()
+    
+    # Retorna o template 'index.html' passando a lista de produtos
+    return render_template('index.html', produtos=produtos)
 
 # === ----- ===
 

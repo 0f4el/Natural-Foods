@@ -51,6 +51,7 @@ class Produto(db.Model):
     preco = db.Column(db.Float, nullable=False)
     imagem = db.Column(db.String(255), nullable=True)  # Nome/Caminho da imagem
     destaque = db.Column(db.Boolean, default=False)     # Para exibir na Home se for True
+    ativo = db.Column(db.Boolean, default=True)
 
     # Chave Estrangeira apontando para a tabela 'categorias'
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
