@@ -2,6 +2,7 @@ from flask import Flask, render_template
 from extensions import db, migrate
 from admin_config import init_admin
 from models import Produto
+import os
 
 app = Flask(__name__)
 
@@ -22,6 +23,13 @@ import models
 # Inicializa o Flask-Admin
 init_admin(app)
 
+# Define o caminho absoluto para a pasta de imagens
+UPLOAD_FOLDER = os.path.join(app.root_path, 'static', 'uploads', 'produtos')
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+# Verifica se a pasta NÃO existe antes de criar
+if not os.path.exists(UPLOAD_FOLDER):
+    os.makedirs(UPLOAD_FOLDER)
 
 # === ROTAS ===
 

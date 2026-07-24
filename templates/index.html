@@ -144,8 +144,14 @@
                             {% endif %}
                             
                             {% if produto.imagem %}
-                                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
+                                {% if produto.imagem.startswith('http') %}
+                                    <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename=produto.imagem) }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                {% endif %}
                             {% else %}
+                                <!-- Placeholder padrão caso o produto esteja sem foto -->
                                 <img src="static/img/placeholder.jpg" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             {% endif %}
                         </div>

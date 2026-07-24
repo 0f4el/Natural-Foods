@@ -3,6 +3,12 @@ from flask_admin.contrib.sqla import ModelView
 from extensions import db
 from models import Categoria, Produto
 from wtforms.validators import Optional
+from flask import current_app
+from flask_admin.form.upload import FileUploadField
+import os
+
+# Descobre o caminho raiz do seu projeto a partir da localização deste arquivo
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # ==========================================
 # ADMIN VIEW: Categoria
@@ -32,7 +38,7 @@ class CategoriaAdminView(ModelView):
     }
 
 # ==========================================
-# ADMIN VIEW: Produto (Task 03.2)
+# ADMIN VIEW: Produto
 # ==========================================
 class ProdutoAdminView(ModelView):
     # Colunas visíveis na tabela de listagem do painel
@@ -44,11 +50,20 @@ class ProdutoAdminView(ModelView):
     # Filtros na barra lateral (permite filtrar por categoria e destaque)
     column_filters = ['categoria.nome', 'destaque', 'preco']
     
-    # Torna o campo 'slug' opcional no formulário
+    # Subtitui o campo 'imagem' por um uploader de arquivos
+    form_extra_fields = {
+        'imagem': FileUploadField(
+            'Imagem do Produto',
+            # Usa a constante BASE_DIR apontando para a pasta static
+            base_path=os.path.join(BASE_DIR, 'static'),
+            relative_path='uploads/produtos/',
+            allowed_extensions=['jpg', 'jpeg', 'png', 'webp', 'gif']
+        )
+    }
+
     form_args = {
-        'slug': {
-            'validators': [Optional()]
-        }
+        'slug': {'validators': [Optional()]},
+        'imagem': {'validators': [Optional()]}
     }
 
     form_optional_types = (db.String,)
