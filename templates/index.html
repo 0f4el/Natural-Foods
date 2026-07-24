@@ -122,93 +122,71 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="max-w-6xl mx-auto px-4 mt-8">
         
-        <!-- Seção: Super Promoções -->
+        <!-- Seção: Super Promoções / Produtos -->
         <section class="mb-12">
             <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
                 <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
-                    <span class="w-2 h-6 rounded bg-laranja"></span> 🔥 Combos Promocionais
+                    <span class="w-2 h-6 rounded bg-laranja"></span> DESTAQUES
                 </h2>
             </div>
 
             <!-- Grid de Produtos -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                
-                <!-- CARD PRODUTO 1 -->
+                {% for produto in produtos %}
                 <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
                     <div>
+                        <!-- Imagem do Produto + Badge de Desconto -->
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-20%</span>
-                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" alt="Combo Low Carb" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            {% if produto.percentual_desconto > 0 %}
+                                <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">
+                                    -{{ "%.0f"|format(produto.percentual_desconto) }}%
+                                </span>
+                            {% endif %}
+                            
+                            {% if produto.imagem %}
+                                <img src="{{ produto.imagem.url }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            {% else %}
+                                <img src="static/img/placeholder.jpg" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            {% endif %}
                         </div>
+
+                        <!-- Detalhes do Produto -->
                         <div class="p-5">
-                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 20 Unidades</span>
-                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">Combo Low Carb (10 Carne + 10 Frango)</h3>
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">
+                                {{ produto.get_categoria_display }}
+                            </span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">
+                                {{ produto.nome }}
+                            </h3>
                             <p class="text-xs text-gray-500 mt-2 line-clamp-3">
-                                100g de proteína + 150g de legumes selecionados. Livre de BPA. Sabor e saúde garantidos.
+                                {{ produto.descricao }}
                             </p>
                         </div>
                     </div>
+
+                    <!-- Preço e Botão de Ação -->
                     <div class="p-5 pt-0 border-t border-gray-50 mt-4">
                         <div class="flex items-baseline gap-2 mb-4">
-                            <span class="text-sm text-gray-400 line-through">R$ 400,00</span>
-                            <span class="text-2xl font-black text-laranja">R$ 320,00</span>
+                            {% if produto.preco_antigo %}
+                                <span class="text-sm text-gray-400 line-through">
+                                    R$ {{ "%.2f"|format(produto.preco_antigo) }}
+                                </span>
+                            {% endif %}
+                            <span class="text-2xl font-black text-laranja">
+                                R$ {{ "%.2f"|format(produto.preco) }}
+                            </span>
                         </div>
+
                         <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
                 </div>
-
-                <!-- CARD PRODUTO 2 -->
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
-                    <div>
-                        <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            <img src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=500&q=80" alt="Marmita Mineira" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="p-5">
-                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 10 Unidades</span>
-                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">10 Marmitas Comida Mineira (Arroz Branco)</h3>
-                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
-                                O sabor tradicional de Minas. 5 unidades de carne moída com quiabo e 5 de frango com milho.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
-                        <div class="flex items-baseline gap-2 mb-4">
-                            <span class="text-2xl font-black text-laranja">R$ 220,00</span>
-                        </div>
-                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
-                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
-                        </button>
-                    </div>
+                {% else %}
+                <div class="col-span-full text-center py-12 text-gray-500">
+                    <p>Nenhum produto cadastrado no momento.</p>
                 </div>
-
-                <!-- CARD PRODUTO 3 -->
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
-                    <div>
-                        <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">-7%</span>
-                            <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=500&q=80" alt="Marmitas Arroz Integral" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div class="p-5">
-                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">Kit 20 Unidades</span>
-                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">20 Marmitas Arroz Integral (10 Carne + 10 Frango)</h3>
-                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
-                                Arroz integral, patinho moído e cubos de peito de frango. Legumes no vapor inclusos.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
-                        <div class="flex items-baseline gap-2 mb-4">
-                            <span class="text-sm text-gray-400 line-through">R$ 280,00</span>
-                            <span class="text-2xl font-black text-laranja">R$ 260,00</span>
-                        </div>
-                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
-                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
-                        </button>
-                    </div>
-                </div>
-
+                {% endfor %}
             </div>
         </section>
 

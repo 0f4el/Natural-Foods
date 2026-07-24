@@ -49,9 +49,18 @@ class Produto(db.Model):
     slug = db.Column(db.String(150), unique=True, nullable=False)
     descricao = db.Column(db.Text, nullable=True)
     preco = db.Column(db.Float, nullable=False)
+    preco_antigo = db.Column(db.Float, nullable=True)
     imagem = db.Column(db.String(255), nullable=True)  # Nome/Caminho da imagem
     destaque = db.Column(db.Boolean, default=False)     # Para exibir na Home se for True
     ativo = db.Column(db.Boolean, default=True)
+
+    # Propriedade para calcular o percentual de desconto
+    @property
+    def percentual_desconto(self):
+        if self.preco_antigo and self.preco_antigo > self.preco:
+            desconto = ((self.preco_antigo - self.preco) / self.preco_antigo) * 100
+            return round(desconto)
+        return 0
 
     # Chave Estrangeira apontando para a tabela 'categorias'
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.id'), nullable=False)
