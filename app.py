@@ -2,16 +2,20 @@ from flask import Flask, render_template, request
 from extensions import db, migrate
 from admin_config import init_admin
 from models import Categoria, Produto
+from dotenv import load_dotenv
 import os
 
 app = Flask(__name__)
+
+# Carrega as variáveis definidas no arquivo .env
+load_dotenv()
 
 # Configurações do Banco de Dados SQLite
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///NTFood.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Chave secreta (necessária para sessões e Flask-Admin)
-app.config['SECRET_KEY'] = 'natural-foods-secret-key-8681273123124'
+# Pega a SECRET_KEY do ambiente (arquivo .env)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'fallback-seguro-apenas-para-dev')
 
 # Inicializa as extensões do banco de dados e migrações
 db.init_app(app)
