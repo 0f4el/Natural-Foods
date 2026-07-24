@@ -28,6 +28,11 @@ class CategoriaAdminView(ModelView):
         'slug': {
             'validators': [Optional()]
         }
+        ,
+        'icone': {
+            'label': 'Ícone (FontAwesome)',
+            'description': 'Insira as classes do FontAwesome. Exemplo: "fa-solid fa-star", "fa-solid fa-drumstick-bite", "fa-solid fa-seedling". Consulte em: https://fontawesome.com/icons'
+        }       
     }
 
     # Dica visual para o usuário de que o campo pode ser deixado em branco

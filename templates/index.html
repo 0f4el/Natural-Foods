@@ -101,32 +101,116 @@
         </div>
     </div>
 
-    <!-- CATEGORIAS -->
+    <!-- CATEGORIAS DINÂMICO VIA JINJA2) -->
     <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-[69px] md:top-[73px] z-40 overflow-x-auto whitespace-nowrap scrollbar-none">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-start md:justify-center gap-4 md:gap-8">
-            <button class="bg-laranja text-white font-semibold px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition hover:bg-orange-700">
-                <i class="fa-solid fa-star"></i> Promocionais
-            </button>
-            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
-                <i class="fa-solid fa-drumstick-bite"></i> Frango + Carne
-            </button>
-            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
-                <i class="fa-solid fa-seedling"></i> Low Carb
-            </button>
-            <button class="text-gray-600 hover-text-verde font-medium px-4 py-2 rounded-full text-sm flex items-center gap-2 cursor-pointer transition">
-                <i class="fa-solid fa-utensils"></i> Comida Mineira
-            </button>
+            <!-- Botão Ver Todos -->
+            <a href="/" 
+               class="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer transition 
+                      {% if not categoria_ativa %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover-text-verde {% endif %}">
+                <i class="fa-solid fa-border-all"></i> Todos
+            </a>
+
+            <!-- Loop de Categorias cadastradas no Banco -->
+            {% for cat in categorias %}
+                <a href="/?categoria={{ cat.slug }}" 
+                class="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer transition 
+                        {% if categoria_ativa == cat.slug %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover-text-verde {% endif %}">
+                    {% if cat.icone %}
+                        <i class="{{ cat.icone }}"></i>
+                    {% endif %}
+                    {{ cat.nome }}
+                </a>
+            {% endfor %}
         </div>
     </nav>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="max-w-6xl mx-auto px-4 mt-8">
         
-        <!-- Seção: Super Promoções / Produtos -->
+        <!-- SEÇÃO DE DESTAQUES (Só é exibida no "Todos", ou seja, quando NÃO houver categoria_ativa) -->
+        {% if not categoria_ativa and produtos_destaque %}
         <section class="mb-12">
             <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
                 <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
                     <span class="w-2 h-6 rounded bg-laranja"></span> DESTAQUES
+                </h2>
+            </div>
+
+            <!-- Grid de Produtos em Destaque -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {% for produto in produtos_destaque %}
+                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                    <div>
+                        <!-- Imagem do Produto + Badge de Desconto -->
+                        <div class="relative h-48 bg-gray-200 overflow-hidden">
+                            {% if produto.percentual_desconto and produto.percentual_desconto > 0 %}
+                                <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">
+                                    -{{ "%.0f"|format(produto.percentual_desconto) }}%
+                                </span>
+                            {% endif %}
+                            
+                            {% if produto.imagem %}
+                                {% if produto.imagem.startswith('http') %}
+                                    <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                {% else %}
+                                    <img src="{{ url_for('static', filename=produto.imagem) }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                {% endif %}
+                            {% else %}
+                                <img src="static/img/placeholder.jpg" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                            {% endif %}
+                        </div>
+
+                        <!-- Detalhes do Produto -->
+                        <div class="p-5">
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider flex items-center gap-1.5">
+                                {% if produto.categoria.icone %}
+                                    <i class="{{ produto.categoria.icone }}"></i>
+                                {% endif %}
+                                {{ produto.categoria.nome }}
+                            </span>
+                            <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">
+                                {{ produto.nome }}
+                            </h3>
+                            <p class="text-xs text-gray-500 mt-2 line-clamp-3">
+                                {{ produto.descricao }}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Preço e Botão de Ação -->
+                    <div class="p-5 pt-0 border-t border-gray-50 mt-4">
+                        <div class="flex items-baseline gap-2 mb-4">
+                            {% if produto.preco_antigo %}
+                                <span class="text-sm text-gray-400 line-through">
+                                    R$ {{ "%.2f"|format(produto.preco_antigo) }}
+                                </span>
+                            {% endif %}
+                            <span class="text-2xl font-black text-laranja">
+                                R$ {{ "%.2f"|format(produto.preco) }}
+                            </span>
+                        </div>
+
+                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- SEÇÃO PRINCIPAL (Todos os produtos ou Categoria Selecionada) -->
+        <section class="mb-12">
+            <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
+                <h2 class="text-xl font-bold text-gray-800 uppercase tracking-wider flex items-center gap-2">
+                    <span class="w-2 h-6 rounded bg-verde"></span> 
+                    {% if categoria_ativa %}
+                        {{ produtos[0].categoria.nome if produtos else 'PRODUTOS' }}
+                    {% else %}
+                        TODOS OS PRODUTOS
+                    {% endif %}
                 </h2>
             </div>
 
@@ -137,14 +221,14 @@
                     <div>
                         <!-- Imagem do Produto + Badge de Desconto -->
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
-                            {% if produto.percentual_desconto > 0 %}
+                            {% if produto.percentual_desconto and produto.percentual_desconto > 0 %}
                                 <span class="absolute top-3 left-3 bg-laranja text-white font-bold text-xs px-3 py-1 rounded-full z-10 shadow-md">
                                     -{{ "%.0f"|format(produto.percentual_desconto) }}%
                                 </span>
                             {% endif %}
                             
                             {% if produto.imagem %}
-                                {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
+                            {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
                                 {% if produto.imagem.startswith('http') %}
                                     <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 {% else %}
@@ -158,8 +242,11 @@
 
                         <!-- Detalhes do Produto -->
                         <div class="p-5">
-                            <span class="text-xs font-bold text-laranja uppercase tracking-wider">
-                                {{ produto.get_categoria_display }}
+                            <span class="text-xs font-bold text-laranja uppercase tracking-wider flex items-center gap-1.5">
+                                {% if produto.categoria.icone %}
+                                    <i class="{{ produto.categoria.icone }}"></i>
+                                {% endif %}
+                                {{ produto.categoria.nome }}
                             </span>
                             <h3 class="text-lg font-bold text-gray-900 mt-1 line-clamp-2">
                                 {{ produto.nome }}
@@ -190,7 +277,7 @@
                 </div>
                 {% else %}
                 <div class="col-span-full text-center py-12 text-gray-500">
-                    <p>Nenhum produto cadastrado no momento.</p>
+                    <p>Nenhum produto encontrado nesta seção.</p>
                 </div>
                 {% endfor %}
             </div>

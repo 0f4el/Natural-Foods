@@ -41,19 +41,28 @@ def index():
     # Busca todas as categorias cadastradas para alimentar os botões do menu
     categorias = Categoria.query.all()
 
+    produtos_destaque = []
+
     if categoria_slug:
-        # Task 04.1: Junta a tabela Produto com Categoria e filtra pelo slug e por produtos ativos
+        # Junta a tabela Produto com Categoria e filtra pelo slug e por produtos ativos
         produtos = Produto.query.join(Categoria).filter(
             Categoria.slug == categoria_slug,
             Produto.ativo == True
         ).all()
     else:
-        # Se nenhum parâmetro for informado, traz todos os produtos ativos
-        produtos = Produto.query.filter_by(ativo=True).all()
+        # Se estiver no "Todos": busca os destaques E todos os produtos ativos
+        produtos_destaque = Produto.query.filter_by(ativo=True, destaque=True).all()
+        produtos = Produto.query.filter_by(ativo=True).order_by(Produto.nome.asc()).all()
+
+    print("--- DEBUG DESTAQUES ---")
+    print("Quantidade de destaques encontrados:", len(produtos_destaque))
+    for p in produtos_destaque:
+        print(f"ID: {p.id} | Nome: {p.nome} | Ativo: {p.ativo} | Destaque: {p.destaque}")
 
     return render_template(
         'index.html',
         produtos=produtos,
+        produtos_destaque=produtos_destaque,
         categorias=categorias,
         categoria_ativa=categoria_slug
     )
