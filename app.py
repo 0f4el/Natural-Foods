@@ -1,7 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from extensions import db, migrate
 from admin_config import init_admin
-from models import Produto
+from models import Categoria, Produto
 import os
 
 app = Flask(__name__)
@@ -35,11 +35,28 @@ if not os.path.exists(UPLOAD_FOLDER):
 
 @app.route('/')
 def index():
-    # Realiza a consulta no banco buscando apenas produtos ativos
-    produtos = Produto.query.filter_by(ativo=True).all()
+    # Captura o slug da categoria passado na URL (ex: /?categoria=low-carb)
+    categoria_slug = request.args.get('categoria')
     
-    # Retorna o template 'index.html' passando a lista de produtos
-    return render_template('index.html', produtos=produtos)
+    # Busca todas as categorias cadastradas para alimentar os botões do menu
+    categorias = Categoria.query.all()
+
+    if categoria_slug:
+        # Task 04.1: Junta a tabela Produto com Categoria e filtra pelo slug e por produtos ativos
+        produtos = Produto.query.join(Categoria).filter(
+            Categoria.slug == categoria_slug,
+            Produto.ativo == True
+        ).all()
+    else:
+        # Se nenhum parâmetro for informado, traz todos os produtos ativos
+        produtos = Produto.query.filter_by(ativo=True).all()
+
+    return render_template(
+        'index.html',
+        produtos=produtos,
+        categorias=categorias,
+        categoria_ativa=categoria_slug
+    )
 
 # === ----- ===
 
