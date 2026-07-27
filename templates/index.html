@@ -8,7 +8,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <!-- Ícones do FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
+    <style type="text/tailwindcss">
+        /* Registra as cores personalizadas no Tailwind v4 */
+        @theme {
+            --color-laranja: #F14900;
+            --color-laranja-hover: #d93e00;
+            --color-verde: #13803C;
+        }
+
         /* Esconder scrollbar no mobile para as categorias */
         .scrollbar-none::-webkit-scrollbar {
             display: none;
@@ -67,7 +74,7 @@
         }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans">
+<body class="bg-gray-50 text-gray-800 font-sans pb-16">
 
     <!-- HEADER / TOPO -->
     <header class="bg-laranja text-white shadow-md sticky top-0 z-50">
@@ -96,7 +103,7 @@
             <p class="mt-4 text-orange-50 max-w-2xl mx-auto">Marmitas fitness deliciosas, preparadas com ingredientes selecionados para sua semana ser prática e saudável. Peça já!</p>
             <div class="mt-8 flex gap-3 justify-center flex-wrap">
                 <button class="bg-white text-laranja font-bold px-6 py-3 rounded-full shadow hover:bg-orange-50 transition cursor-pointer">Ver Cardápio</button>
-                <button class="bg-verde text-white font-bold px-6 py-3 rounded-full shadow hover:bg-verde-claro transition cursor-pointer">Kits Promocionais</button>
+                <button class="bg-verde text-white font-bold px-6 py-3 rounded-full shadow hover:bg-opacity-90 transition cursor-pointer">Kits Promocionais</button>
             </div>
         </div>
     </div>
@@ -107,15 +114,15 @@
             <!-- Botão Ver Todos -->
             <a href="/" 
                class="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer transition 
-                      {% if not categoria_ativa %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover-text-verde {% endif %}">
+                      {% if not categoria_ativa %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover:text-verde {% endif %}">
                 <i class="fa-solid fa-border-all"></i> Todos
             </a>
 
             <!-- Loop de Categorias cadastradas no Banco -->
             {% for cat in categorias %}
                 <a href="/?categoria={{ cat.slug }}" 
-                class="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer transition 
-                        {% if categoria_ativa == cat.slug %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover-text-verde {% endif %}">
+                   class="px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2 cursor-pointer transition 
+                          {% if categoria_ativa == cat.slug %} bg-laranja text-white shadow-md {% else %} text-gray-600 hover:text-verde {% endif %}">
                     {% if cat.icone %}
                         <i class="{{ cat.icone }}"></i>
                     {% endif %}
@@ -128,7 +135,7 @@
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="max-w-6xl mx-auto px-4 mt-8">
         
-        <!-- SEÇÃO DE DESTAQUES (Só é exibida no "Todos", ou seja, quando NÃO houver categoria_ativa) -->
+        <!-- SEÇÃO DE DESTAQUES (Exibida apenas quando não há categoria_ativa) -->
         {% if not categoria_ativa and produtos_destaque %}
         <section class="mb-12">
             <div class="flex items-center gap-2 mb-6 border-b border-gray-100 pb-2">
@@ -191,7 +198,11 @@
                             </span>
                         </div>
 
-                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                        <button class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
+                                data-product-id="{{ produto.id }}"
+                                data-product-title="{{ produto.nome }}"
+                                data-product-price="{{ produto.preco }}"
+                                data-product-image="{{ produto.imagem }}">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
@@ -228,14 +239,14 @@
                             {% endif %}
                             
                             {% if produto.imagem %}
-                            {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
+                                {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
                                 {% if produto.imagem.startswith('http') %}
                                     <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 {% else %}
                                     <img src="{{ url_for('static', filename=produto.imagem) }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 {% endif %}
                             {% else %}
-                                <!-- Placeholder padrão caso o produto esteja sem foto -->
+                                <!-- Placeholder padrão caso o produto esteja sem foto --> 
                                 <img src="static/img/placeholder.jpg" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             {% endif %}
                         </div>
@@ -270,7 +281,11 @@
                             </span>
                         </div>
 
-                        <button class="w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg">
+                        <button class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
+                                data-product-id="{{ produto.id }}"
+                                data-product-title="{{ produto.nome }}"
+                                data-product-price="{{ produto.preco }}"
+                                data-product-image="{{ produto.imagem }}">
                             <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
                         </button>
                     </div>
@@ -286,23 +301,34 @@
     </main>
 
     <!-- BARRA DE NAVEGAÇÃO INFERIOR -->
-    <div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 shadow-[0_-5px_15px_-5px_rgba(0,0,0,0.1)] z-50">
-        <div class="max-w-md mx-auto flex justify-around py-3 text-center">
-            <a href="#" class="text-verde flex flex-col items-center gap-1 text-xs font-semibold">
-                <i class="fa-solid fa-utensils text-xl"></i>
-                Cardápio
+    <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-lg z-50">
+        <div class="max-w-md mx-auto flex items-center justify-around py-2 px-4">
+            
+            <!-- Botão Cardápio -->
+            <a href="#cardapio" class="group flex flex-col items-center text-xs font-semibold text-laranja cursor-pointer transition">
+                <i class="fa-solid fa-utensils text-lg mb-1 group-hover:text-laranja-hover transition-colors"></i>
+                <span class="group-hover:text-laranja-hover transition-colors">Cardápio</span>
             </a>
-            <a href="#" class="text-gray-400 hover-text-laranja flex flex-col items-center gap-1 text-xs font-medium transition relative">
-                <i class="fa-solid fa-basket-shopping text-xl"></i>
-                Carrinho
-                <span class="absolute -top-1.5 right-1.5 bg-laranja text-white text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold shadow-md">3</span>
+
+            <!-- Botão Carrinho (Com Badge de Quantidade) -->
+            <button class="open-cart-btn group relative flex flex-col items-center text-xs font-semibold text-gray-500 cursor-pointer transition">
+                <div class="relative">
+                    <i class="fa-solid fa-bag-shopping text-xl text-gray-700 group-hover:text-laranja transition-colors"></i>
+                    <span class="cart-count-badge absolute -top-2 -right-3 bg-laranja text-white text-[10px] font-bold rounded-full w-4 h-4 flex items-center justify-center border border-white">
+                        0
+                    </span>
+                </div>
+                <span class="mt-1 group-hover:text-laranja transition-colors">Carrinho</span>
+            </button>
+
+            <!-- Botão Histórico / Pedidos -->
+            <a href="#historico" class="group flex flex-col items-center text-xs font-semibold text-gray-500 cursor-pointer transition">
+                <i class="fa-solid fa-clock-rotate-left text-lg mb-1 group-hover:text-laranja transition-colors"></i>
+                <span class="group-hover:text-laranja transition-colors">Histórico</span>
             </a>
-            <a href="#" class="text-gray-400 hover-text-verde flex flex-col items-center gap-1 text-xs font-medium transition">
-                <i class="fa-solid fa-clock-rotate-left text-xl"></i>
-                Histórico
-            </a>
+
         </div>
-    </div>
+    </nav>
         
     <!-- RODAPÉ -->
     <footer class="text-white mt-16" style="background-color: #181717;">
@@ -320,13 +346,13 @@
                         quem busca praticidade sem abrir mão do sabor e da qualidade nutricional.
                     </p>
                     <div class="mt-4 flex gap-3">
-                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                        <a href="#" class="text-gray-400 hover:text-verde transition text-xl">
                             <i class="fa-brands fa-instagram"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                        <a href="#" class="text-gray-400 hover:text-verde transition text-xl">
                             <i class="fa-brands fa-whatsapp"></i>
                         </a>
-                        <a href="#" class="text-gray-400 hover-text-verde transition text-xl">
+                        <a href="#" class="text-gray-400 hover:text-verde transition text-xl">
                             <i class="fa-brands fa-facebook"></i>
                         </a>
                     </div>
@@ -368,7 +394,7 @@
                         <i class="fa-solid fa-phone text-verde text-lg mt-0.5"></i>
                         <div>
                             <p class="text-sm font-medium text-white">Telefone</p>
-                            <a href="tel:+553195947489" class="text-gray-400 hover-text-verde transition text-sm">
+                            <a href="tel:+553195947489" class="text-gray-400 hover:text-verde transition text-sm">
                                 (31) xxxxx-xxxx
                             </a>
                         </div>
@@ -379,7 +405,7 @@
                         <i class="fa-brands fa-whatsapp text-verde text-lg mt-0.5"></i>
                         <div>
                             <p class="text-sm font-medium text-white">WhatsApp</p>
-                            <a href="https://wa.me/553195947489" target="_blank" class="text-gray-400 hover-text-verde transition text-sm">
+                            <a href="https://wa.me/553195947489" target="_blank" class="text-gray-400 hover:text-verde transition text-sm">
                                 (31) 95947-489
                             </a>
                         </div>
@@ -408,13 +434,15 @@
                     &copy; 2026 <span class="text-verde font-medium">Natural Foods</span> - Todos os direitos reservados
                 </p>
                 <p class="mt-2 md:mt-0 flex items-center gap-4">
-                    <a href="#" class="hover-text-verde transition">Política de Privacidade</a>
+                    <a href="#" class="hover:text-verde transition">Política de Privacidade</a>
                     <span>|</span>
-                    <a href="#" class="hover-text-verde transition">Termos de Uso</a>
+                    <a href="#" class="hover:text-verde transition">Termos de Uso</a>
                 </p>
             </div>
         </div>
     </footer>
-
+    
+    <!-- Scripts -->
+    <script src="cart.js"></script>
 </body>
 </html>
