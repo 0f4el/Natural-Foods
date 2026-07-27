@@ -108,7 +108,7 @@
         </div>
     </div>
 
-    <!-- CATEGORIAS DINÂMICO VIA JINJA2) -->
+    <!-- CATEGORIAS DINÂMICO VIA JINJA2 -->
     <nav class="bg-white shadow-sm border-b border-gray-100 sticky top-[69px] md:top-[73px] z-40 overflow-x-auto whitespace-nowrap scrollbar-none">
         <div class="max-w-6xl mx-auto px-4 py-3 flex justify-start md:justify-center gap-4 md:gap-8">
             <!-- Botão Ver Todos -->
@@ -147,7 +147,13 @@
             <!-- Grid de Produtos em Destaque -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for produto in produtos_destaque %}
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                <div class="product-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group cursor-pointer"
+                     data-product-id="{{ produto.id }}"
+                     data-product-title="{{ produto.nome }}"
+                     data-product-price="{{ produto.preco }}"
+                     data-product-description="{{ produto.descricao }}"
+                     data-product-category="{{ produto.categoria.nome }}"
+                     data-product-image="{% if produto.imagem %}{% if produto.imagem.startswith('http') %}{{ produto.imagem }}{% else %}{{ url_for('static', filename=produto.imagem) }}{% endif %}{% else %}static/img/placeholder.jpg{% endif %}">
                     <div>
                         <!-- Imagem do Produto + Badge de Desconto -->
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
@@ -198,12 +204,13 @@
                             </span>
                         </div>
 
-                        <button class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
+                        <button type="button" class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
                                 data-product-id="{{ produto.id }}"
                                 data-product-title="{{ produto.nome }}"
                                 data-product-price="{{ produto.preco }}"
-                                data-product-image="{{ produto.imagem }}">
-                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                                data-product-image="{% if produto.imagem %}{% if produto.imagem.startswith('http') %}{{ produto.imagem }}{% else %}{{ url_for('static', filename=produto.imagem) }}{% endif %}{% else %}static/img/placeholder.jpg{% endif %}">
+                            <i class="fa-solid fa-cart-plus pointer-events-none"></i>
+                            <span class="pointer-events-none">Adicionar ao Carrinho</span>
                         </button>
                     </div>
                 </div>
@@ -228,7 +235,13 @@
             <!-- Grid de Produtos -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {% for produto in produtos %}
-                <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group">
+                <div class="product-card bg-white rounded-2xl shadow-sm hover:shadow-lg transition duration-300 border border-gray-100 overflow-hidden flex flex-col justify-between group cursor-pointer"
+                     data-product-id="{{ produto.id }}"
+                     data-product-title="{{ produto.nome }}"
+                     data-product-price="{{ produto.preco }}"
+                     data-product-description="{{ produto.descricao }}"
+                     data-product-category="{{ produto.categoria.nome }}"
+                     data-product-image="{% if produto.imagem %}{% if produto.imagem.startswith('http') %}{{ produto.imagem }}{% else %}{{ url_for('static', filename=produto.imagem) }}{% endif %}{% else %}static/img/placeholder.jpg{% endif %}">
                     <div>
                         <!-- Imagem do Produto + Badge de Desconto -->
                         <div class="relative h-48 bg-gray-200 overflow-hidden">
@@ -239,14 +252,12 @@
                             {% endif %}
                             
                             {% if produto.imagem %}
-                                {# Se começar com 'http', é uma imagem externa. Se não, busca da pasta static #}
                                 {% if produto.imagem.startswith('http') %}
                                     <img src="{{ produto.imagem }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 {% else %}
                                     <img src="{{ url_for('static', filename=produto.imagem) }}" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                                 {% endif %}
                             {% else %}
-                                <!-- Placeholder padrão caso o produto esteja sem foto --> 
                                 <img src="static/img/placeholder.jpg" alt="{{ produto.nome }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             {% endif %}
                         </div>
@@ -286,7 +297,7 @@
                                 data-product-id="{{ produto.id }}"
                                 data-product-title="{{ produto.nome }}"
                                 data-product-price="{{ produto.preco }}"
-                                data-product-image="{{ produto.imagem if produto.imagem else '' }}">
+                                data-product-image="{% if produto.imagem %}{% if produto.imagem.startswith('http') %}{{ produto.imagem }}{% else %}{{ url_for('static', filename=produto.imagem) }}{% endif %}{% else %}static/img/placeholder.jpg{% endif %}">
                             <i class="fa-solid fa-cart-plus pointer-events-none"></i> 
                             <span class="pointer-events-none">Adicionar ao Carrinho</span>
                         </button>
@@ -363,7 +374,7 @@
                 <!-- Coluna 2 - Horários -->
                 <div>
                     <h3 class="text-lg font-bold mb-4 flex items-center gap-2">
-                        <i class="fa-regular fa-clock text-verde"></i> Horários (exemplo para alterar dps)
+                        <i class="fa-regular fa-clock text-verde"></i> Horários
                     </h3>
                     <ul class="space-y-2 text-sm text-gray-400">
                         <li class="flex justify-between">
@@ -443,8 +454,158 @@
             </div>
         </div>
     </footer>
-    
+        
+    <!-- MODAL DE DETALHES DO PRODUTO (VER MAIS) -->
+    <div id="product-modal-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 hidden transition-opacity duration-300 opacity-0 flex items-center justify-center p-4">
+        <div id="product-modal" class="bg-white rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl transform scale-95 transition-transform duration-300 flex flex-col max-h-[90vh]">
+            
+            <!-- Cabeçalho / Imagem -->
+            <div class="relative h-64 bg-gray-100 flex-shrink-0">
+                <img id="modal-product-image" src="" alt="" class="w-full h-full object-cover">
+                <button id="close-product-modal" type="button" class="absolute top-3 right-3 bg-white/80 hover:bg-white text-gray-700 w-9 h-9 rounded-full flex items-center justify-center cursor-pointer transition shadow">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Conteúdo do Produto -->
+            <div class="p-6 overflow-y-auto flex-1 space-y-3">
+                <span id="modal-product-category" class="text-xs font-bold text-laranja uppercase tracking-wider"></span>
+                <h3 id="modal-product-title" class="text-2xl font-extrabold text-gray-900"></h3>
+                <p id="modal-product-description" class="text-sm text-gray-600 leading-relaxed"></p>
+                <div class="pt-2">
+                    <span id="modal-product-price" class="text-3xl font-black text-laranja"></span>
+                </div>
+            </div>
+
+            <!-- Rodapé do Modal com Ação de Adicionar -->
+            <div class="p-4 border-t border-gray-100 bg-gray-50">
+                <button id="modal-add-to-cart-btn" type="button" class="w-full bg-laranja hover:bg-orange-600 text-white font-bold py-3 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- TOAST DE NOTIFICAÇÃO (CANTO SUPERIOR DIREITO) -->
+    <div id="toast-notification" class="fixed top-5 right-5 z-50 transform translate-x-full opacity-0 transition-all duration-300 pointer-events-none">
+        <div class="bg-verde text-white px-5 py-3 rounded-xl shadow-xl flex items-center gap-3">
+            <i class="fa-solid fa-circle-check text-xl"></i>
+            <div>
+                <p class="font-bold text-sm">Item Adicionado!</p>
+                <p id="toast-message" class="text-xs opacity-90">Marmita adicionada ao seu carrinho.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- DRAWER / MODAL DO CARRINHO -->
+    <div id="cart-drawer-overlay" class="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 hidden transition-opacity duration-300 opacity-0">
+        <div id="cart-drawer" class="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col justify-between">
+            
+            <!-- Cabeçalho do Carrinho -->
+            <div class="p-4 border-b border-gray-100 flex items-center justify-between bg-gray-50">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-bag-shopping text-laranja text-xl"></i>
+                    <h2 class="text-lg font-bold text-gray-800">Seu Carrinho</h2>
+                    <span class="cart-count-badge bg-laranja text-white text-xs font-bold px-2 py-0.5 rounded-full">0</span>
+                </div>
+                <button id="close-cart-btn" type="button" class="text-gray-400 hover:text-gray-700 text-xl p-2 cursor-pointer transition">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <!-- Lista de Itens do Carrinho (Injetado via JS) -->
+            <div id="cart-items-container" class="p-4 overflow-y-auto flex-1 divide-y divide-gray-100">
+                <!-- Os itens do carrinho aparecerão aqui -->
+            </div>
+
+            <!-- Rodapé do Carrinho com Subtotal e Aviso -->
+            <div class="p-4 border-t border-gray-100 bg-gray-50 space-y-3">
+                <div class="flex justify-between items-center text-gray-700">
+                    <span class="font-semibold">Subtotal:</span>
+                    <span id="cart-subtotal" class="text-2xl font-black text-laranja">R$ 0,00</span>
+                </div>
+
+                <!-- AVISO DE ENTREGA -->
+                <div class="bg-orange-50 border border-orange-200 rounded-xl p-3 text-[11px] text-orange-950 leading-relaxed">
+                    <p><strong>IMPORTANTE:</strong> DENTRO DE 1 A 2 DIAS ÚTEIS NOSSO MOTOBOY ENTRARÁ EM CONTATO E AGENDARÁ A SUA ENTREGA! BH E CONTAGEM ENTREGA GRATUITA, demais localizações R$20,00.</p>
+                </div>
+
+                <button id="checkout-btn" type="button" class="w-full bg-verde hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition flex items-center justify-center gap-2 cursor-pointer">
+                    <i class="fa-solid fa-check"></i> Finalizar Pedido
+                </button>
+            </div>
+
+        </div>
+    </div>
+
     <!-- Scripts -->
     <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
+
+    <!-- Script Inline para lidar com o clique no card (caso queira adicionar no final ou dentro de cart.js) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('product-modal-overlay');
+            const modal = document.getElementById('product-modal');
+            const closeModalBtn = document.getElementById('close-product-modal');
+
+            // Função para abrir modal do produto
+            function openProductModal(data) {
+                document.getElementById('modal-product-image').src = data.image;
+                document.getElementById('modal-product-category').textContent = data.category;
+                document.getElementById('modal-product-title').textContent = data.title;
+                document.getElementById('modal-product-description').textContent = data.description;
+                document.getElementById('modal-product-price').textContent = `R$ ${parseFloat(data.price).toFixed(2).replace('.', ',')}`;
+                
+                const modalAddBtn = document.getElementById('modal-add-to-cart-btn');
+                modalAddBtn.setAttribute('data-product-id', data.id);
+                modalAddBtn.setAttribute('data-product-title', data.title);
+                modalAddBtn.setAttribute('data-product-price', data.price);
+                modalAddBtn.setAttribute('data-product-image', data.image);
+
+                overlay.classList.remove('hidden');
+                setTimeout(() => {
+                    overlay.classList.remove('opacity-0');
+                    modal.classList.remove('scale-95');
+                }, 10);
+            }
+
+            // Fechar modal
+            function closeProductModal() {
+                overlay.classList.add('opacity-0');
+                modal.classList.add('scale-95');
+                setTimeout(() => {
+                    overlay.classList.add('hidden');
+                }, 300);
+            }
+
+            if(closeModalBtn) closeModalBtn.addEventListener('click', closeProductModal);
+            if(overlay) {
+                overlay.addEventListener('click', (e) => {
+                    if(e.target === overlay) closeProductModal();
+                });
+            }
+
+            // Clique no Card Inteiro
+            document.querySelectorAll('.product-card').forEach(card => {
+                card.addEventListener('click', (e) => {
+                    // Evita abrir o modal se o usuário clicar diretamente no botão de Adicionar ao Carrinho
+                    if (e.target.closest('.add-to-cart-btn')) {
+                        return;
+                    }
+
+                    const data = {
+                        id: card.getAttribute('data-product-id'),
+                        title: card.getAttribute('data-product-title'),
+                        price: card.getAttribute('data-product-price'),
+                        description: card.getAttribute('data-product-description'),
+                        category: card.getAttribute('data-product-category'),
+                        image: card.getAttribute('data-product-image')
+                    };
+                    openProductModal(data);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
