@@ -281,12 +281,14 @@
                             </span>
                         </div>
 
-                        <button class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
+                        <button type="button" 
+                                class="add-to-cart-btn w-full btn-laranja font-bold py-3 px-4 rounded-xl transition flex items-center justify-center gap-2 cursor-pointer shadow-sm group-hover:shadow-lg"
                                 data-product-id="{{ produto.id }}"
                                 data-product-title="{{ produto.nome }}"
                                 data-product-price="{{ produto.preco }}"
-                                data-product-image="{{ produto.imagem }}">
-                            <i class="fa-solid fa-cart-plus"></i> Adicionar ao Carrinho
+                                data-product-image="{{ produto.imagem if produto.imagem else '' }}">
+                            <i class="fa-solid fa-cart-plus pointer-events-none"></i> 
+                            <span class="pointer-events-none">Adicionar ao Carrinho</span>
                         </button>
                     </div>
                 </div>
@@ -443,6 +445,6 @@
     </footer>
     
     <!-- Scripts -->
-    <script src="cart.js"></script>
+    <script src="{{ url_for('static', filename='js/cart.js') }}"></script>
 </body>
 </html>
